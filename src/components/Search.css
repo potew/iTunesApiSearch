@@ -1,0 +1,53 @@
+.search-bar {
+  display: block;
+}
+
+header {
+  background-image: url('../media/Header.png');
+  background-size: cover;
+  height: 95px;
+}
+.search-panel {
+  border: 2px solid gray;
+  font-family: Costa Ptf Regular, Segoe UI, Verdana, sans-serif;
+  margin: 10px;
+  padding: 1em;
+  text-align: center;
+}
+
+label {
+  padding: 0 10px;
+}
+
+input {
+  width: 100px;
+}
+
+.results {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+}
+
+@media screen and ( max-width: 500px ) {
+  header {
+    height: 30px;
+  }
+
+  .results {
+    display: block;
+    justify-content: center;
+  }
+
+  .track-card {
+    border: 1px solid gray;
+    display: flex;
+    margin: 2px;
+    padding: 0 5px 0 5px;
+  }
+
+  .album-card {
+    border: 1px solid gray;
+    display: flex;
+  }
+}

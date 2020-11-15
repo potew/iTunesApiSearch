@@ -1,0 +1,44 @@
+.track-card {
+  border: 1px solid gray;
+  display: flex;
+  margin: 10px;
+  max-width: 50%;
+  padding: 0 20px 0 5px;
+  width: auto;
+}
+
+.album-card {
+  border: 1px solid gray;
+  display: flex;
+  margin: 10px;
+  width: 80%;
+}
+
+.track-info {
+  align-content: space-between;
+  justify-items: baseline;
+  left: 10px;
+  line-height: 1;
+  position: relative;
+  text-align: start;
+}
+
+.track-album-cover {
+  margin: 10px;
+}
+
+.track-card:hover {
+  background-color: lightblue;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+h4 {
+  line-height: 0;
+}
+
+progress {
+  width: 80%;
+}
