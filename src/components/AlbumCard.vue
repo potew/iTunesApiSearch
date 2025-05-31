@@ -4,7 +4,7 @@
       cover
       height="250"
       lazy-src="https://picsum.photos/id/11/100/60"
-      :src="item.artworkUrl100.replace('100x100', '600x600')"
+      :src="item.artworkUrl100 ? item.artworkUrl100.replace('100x100', '600x600') : 'https://picsum.photos/id/11/600/600'"
     />
 
     <v-card-title>{{ item.collectionName }}</v-card-title>

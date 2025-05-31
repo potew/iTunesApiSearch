@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -35,15 +35,10 @@ h1 {
   line-height: 1.1;
 }
 
-button {
-  border-radius: 8px;
+.v-btn {
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
+  border-radius: 0 !important;
+  letter-spacing: 0 !important;
   transition: border-color 0.25s;
 }
 button:hover {
@@ -59,18 +54,29 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
 }
 
 .bg-app {
-  background-image: url('../assets/background.jpg');
+  background-image: url('./assets/bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
+}
+
+.v-field {
+  background-color: #222 !important;
+  color: #d6cccc !important;
+}
+
+.v-footer {
+  margin-top: 1.5rem;
+  color: #d6cccc !important;
+  background-color: #222 !important;
 }
 
 @media (prefers-color-scheme: light) {

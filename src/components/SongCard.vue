@@ -3,7 +3,7 @@
     <v-img
       cover
       height="250"
-      lazy-src="https://picsum.photos/id/11/100/60"
+      :lazy-src="loadingImg"
       :src="item.artworkUrl100.replace('100x100', '600x600')"
     />
 
@@ -20,12 +20,14 @@
     </v-card-text>
 
     <v-card-actions>
-      <audio v-if="item.previewUrl" :src="item.previewUrl" controls style="width: 100%" />
+      <audio v-if="item.previewUrl" :src="item.previewUrl" preload="none" controls style="width: 100%" />
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+  import loadingImg from '../assets/hourglass.gif'
+
   defineProps({
     item: Object
   })

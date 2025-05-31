@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main :style="`background-image: url(${bg})`" class="bg-app">
+    <v-main class="bg-app">
       <v-container class="py-8">
         <v-row justify="center">
           <v-col cols="12" md="4">
@@ -9,6 +9,7 @@
               variant="outlined"
               density="compact"
               v-model="searchQuery"
+              placeholder="Digite algo..."
               prepend-inner-icon="mdi-cursor-text"
               @keydown.enter="fetchResults"
             />
@@ -19,18 +20,20 @@
               v-model="mediaType"
               :items="mediaTypes"
               density="compact"
-              append-icon="mdi-account-music"
               label="Tipo de mídia"
             />
           </v-col>
           <v-col cols="12" md="2">
             <v-number-input
+              variant="outlined"
               :reverse="false"
               controlVariant="split"
               density="compact"
               label="Max. resultados"
               :hideInput="false"
               :inset="false"
+              :min="1"
+              :max="100"
               v-model="maxResults"
             ></v-number-input>
           </v-col>
@@ -45,6 +48,7 @@
             </v-btn>
           </v-col>
         </v-row>
+        <v-img v-if="loading" class="mx-auto d-block" :width="88" :src="aguardeGIF"></v-img>
         <v-row>
           <v-col
             v-for="item in results"
@@ -58,7 +62,6 @@
             <ArtistCard v-else-if="mediaType === 'musicArtist'" :item="item" />
           </v-col>
         </v-row>
-        <v-img v-if="loading" class="mx-auto d-block" :width="88" :src="aguardeGIF"></v-img>
         <v-footer border>{{ feedbackMsg }}</v-footer>
       </v-container>
     </v-main>
@@ -66,15 +69,14 @@
 </template>
 
 <script setup>
-  import { ref, watch } from 'vue'
-  import bg from './assets/bg.jpg'
+  import { ref } from 'vue'
   import aguardeGIF from './assets/aguarde.gif'
   import SongCard from './components/SongCard.vue'
   import AlbumCard from './components/AlbumCard.vue'
   import ArtistCard from './components/ArtistCard.vue'
 
   const searchQuery = ref('')
-  const feedbackMsg = ref('Bem-vindo ao meu buscador de músicas do iTunes, v1, pois o outro era tão ruim que virou v0...')
+  const feedbackMsg = ref('Bem-vindo ao meu buscador de músicas do iTunes v1 (pois o anterior era tão ruim que virou v0)')
   const mediaType = ref(null)
   const maxResults = ref(30)
   const loading = ref(false)
@@ -85,12 +87,6 @@
     {value: 'musicArtist', title: "Artista"},
     {value: 'album', title: "Álbum"}
   ]
-
-  watch(mediaType, (newType) => {
-    if (searchQuery.value && newType) {
-      fetchResults()
-    }
-  })
 
   async function fetchResults() {
     if (searchQuery.value.length < 3 || !mediaType.value) {
