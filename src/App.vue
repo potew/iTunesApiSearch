@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main :style="`background-image: url(${bg})`" class="bg-app">
       <v-container class="py-8">
         <v-row justify="center">
           <v-col cols="12" md="4">
@@ -53,7 +53,9 @@
             sm="6"
             md="4"
           >
-            <MediaCard :item="item" />
+            <SongCard v-if="mediaType === 'musicTrack'" :item="item" />
+            <AlbumCard v-else-if="mediaType === 'album'" :item="item" />
+            <ArtistCard v-else-if="mediaType === 'musicArtist'" :item="item" />
           </v-col>
         </v-row>
         <v-img v-if="loading" class="mx-auto d-block" :width="88" :src="aguardeGIF"></v-img>
@@ -64,12 +66,15 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
+  import bg from './assets/bg.jpg'
   import aguardeGIF from './assets/aguarde.gif'
-  import MediaCard from './components/MediaCard.vue'
+  import SongCard from './components/SongCard.vue'
+  import AlbumCard from './components/AlbumCard.vue'
+  import ArtistCard from './components/ArtistCard.vue'
 
   const searchQuery = ref('')
-  const feedbackMsg = ref('Bem-vindo ao meu buscador de músicas do iTunes, v1, pois o outro era tão ruim que virou v0!')
+  const feedbackMsg = ref('Bem-vindo ao meu buscador de músicas do iTunes, v1, pois o outro era tão ruim que virou v0...')
   const mediaType = ref(null)
   const maxResults = ref(30)
   const loading = ref(false)
@@ -80,6 +85,12 @@
     {value: 'musicArtist', title: "Artista"},
     {value: 'album', title: "Álbum"}
   ]
+
+  watch(mediaType, (newType) => {
+    if (searchQuery.value && newType) {
+      fetchResults()
+    }
+  })
 
   async function fetchResults() {
     if (searchQuery.value.length < 3 || !mediaType.value) {
