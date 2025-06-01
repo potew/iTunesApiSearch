@@ -1,6 +1,9 @@
 <template>
   <v-app>
     <v-main class="bg-app">
+      <v-toolbar color="primary" dark>
+        <v-toolbar-title>Buscador de Mídias do iTunes, v1</v-toolbar-title>
+      </v-toolbar>
       <v-container class="py-8">
         <v-row justify="center">
           <v-col cols="12" md="4">
@@ -55,11 +58,12 @@
             :key="item.trackId"
             cols="12"
             sm="6"
-            md="4"
+            :md="mediaType === 'movie' ? 12 : 4"
           >
             <SongCard v-if="mediaType === 'musicTrack'" :item="item" />
             <AlbumCard v-else-if="mediaType === 'album'" :item="item" />
             <ArtistCard v-else-if="mediaType === 'musicArtist'" :item="item" />
+            <MovieCard v-else-if="mediaType === 'movie'" :item="item" />
           </v-col>
         </v-row>
         <v-footer border>{{ feedbackMsg }}</v-footer>
@@ -74,9 +78,10 @@
   import SongCard from './components/SongCard.vue'
   import AlbumCard from './components/AlbumCard.vue'
   import ArtistCard from './components/ArtistCard.vue'
+  import MovieCard from './components/MovieCard.vue'
 
   const searchQuery = ref('')
-  const feedbackMsg = ref('Bem-vindo ao meu buscador de músicas do iTunes v1 (pois o anterior era tão ruim que virou v0)')
+  const feedbackMsg = ref('(porque o anterior era tão ruim que virou v0)')
   const mediaType = ref(null)
   const maxResults = ref(30)
   const loading = ref(false)
@@ -85,7 +90,8 @@
   const mediaTypes = [
     {value: 'musicTrack', title: "Música"},
     {value: 'musicArtist', title: "Artista"},
-    {value: 'album', title: "Álbum"}
+    {value: 'album', title: "Álbum"},
+    {value: 'movie', title: "Filme"}
   ]
 
   async function fetchResults() {

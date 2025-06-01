@@ -1,9 +1,9 @@
 <template>
   <v-card>
-<v-img
+    <v-img
       cover
       height="250"
-      lazy-src="https://picsum.photos/id/11/100/60"
+      :lazy-src="loadingImg"
       :src="item.artworkUrl100 ? item.artworkUrl100.replace('100x100', '600x600') : 'https://picsum.photos/id/11/600/600'"
     />
 
@@ -36,16 +36,10 @@
 </template>
 
 <script setup>
+import { formatDate } from '../misc/utils'
+import loadingImg from '../assets/hourglass.gif'
+
 defineProps({
   item: Object
 })
-
-function formatDate(dateStr) {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('pt-BR', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
-  })
-}
 </script>
